@@ -1,31 +1,36 @@
 {
   "name": "ts-node-template",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "src/module.exports/index.js",
   "repository": "https://mshrtsr@github.com/mshrtsr/ts-node-template.git",
   "author": "Masaharu TASHIRO <masatsr.kit@gmail.com>",
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "start": "TS_NODE_FILES=true ts-node src/index.ts",
-    "dev": "TS_NODE_FILES=true ts-node-dev src/index.ts",
-    "lint": "run-p lint:eslint lint:prettier",
-    "lint:eslint": "eslint 'src/**/*.ts'",
-    "lint:prettier": "prettier 'src/**/*.ts' --check",
-    "fix": "run-s fix:eslint fix:prettier",
-    "fix:eslint": "yarn lint:eslint --fix",
-    "fix:prettier": "yarn lint:prettier --write"
+    "start": "run-s start:exports start:module",
+    "start:exports": "run-s start:exports:default start:exports:named",
+    "start:exports:default": "run-s start:exports:default:cjs start:exports:default:esm",
+    "start:exports:default:cjs": "node src/exports/index.js",
+    "start:exports:default:esm": "node src/exports/index.mjs",
+    "start:exports:named": "run-s start:exports:named:cjs start:exports:named:esm",
+    "start:exports:named:cjs": "node src/exports/named.js",
+    "start:exports:named:esm": "node src/exports/named.mjs",
+    "start:module": "run-s start:module:default start:module:named",
+    "start:module:default": "run-s start:module:default:cjs start:module:default:esm",
+    "start:module:default:cjs": "node src/module.exports/index.js",
+    "start:module:default:esm": "node src/module.exports/index.mjs",
+    "start:module:named": "run-s start:module:named:cjs start:module:named:esm",
+    "start:module:named:cjs": "node src/module.exports/named.js",
+    "start:module:named:esm": "node src/module.exports/named.mjs",
+    "lint": "eslint 'src/**/*.js'",
+    "fix": "run-s lint:eslint --fix"
   },
   "dependencies": {
-    "ts-node": "^10.0.0",
-    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^17.0.1",
-    "@tsconfig/recommended": "^1.0.1",
     "eslint": "^8.12.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.4",
-    "ts-node-dev": "^1.0.0-pre.41"
+    "prettier": "^2.0.4"
   }
 }
